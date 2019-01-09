@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product_type", catalog = "computer_store")
+@Table(name = "product_type")
 public class ProductType implements Serializable {
 	@Id
 	@Column(name = "id")
