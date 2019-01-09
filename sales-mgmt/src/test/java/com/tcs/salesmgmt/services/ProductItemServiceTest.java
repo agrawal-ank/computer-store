@@ -120,20 +120,20 @@ public class ProductItemServiceTest {
 		item1.setProductType("computer");
 		item1.setAmount(5000);
 		HashMap<String, String> propertyMap = new HashMap<>();
-		propertyMap.put("form-factor", "desktop");
-		propertyMap.put("series_number", "C001");
-		propertyMap.put("price", "80000");
-		propertyMap.put("manufacturer", "HP");
+		propertyMap.put("FORM-FACTOR", "desktop");
+		propertyMap.put("SERIES_NUMBER", "C001");
+		propertyMap.put("PRICE", "80000");
+		propertyMap.put("MANUFACTURE", "HP");
 		item1.setItemProperties(propertyMap);
 		
 		CSVItem item2 = new CSVItem();
 		item2.setProductType("computer");
 		item2.setAmount(1000);
 		HashMap<String, String> propertyMap1 = new HashMap<>();
-		propertyMap1.put("form-factor", "desktop");
-		propertyMap1.put("series_number", "C002");
-		propertyMap1.put("price", "100000");
-		propertyMap1.put("manufacturer", "HP");
+		propertyMap1.put("FORM-FACTOR", "desktop");
+		propertyMap1.put("SERIES_NUMBER", "C002");
+		propertyMap1.put("PRICE", "100000");
+		propertyMap1.put("MANUFACTURE", "HP");
 		item2.setItemProperties(propertyMap1);
 		
 		csvItemList.add(0, item1);

@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.tcs.salesmgmt.domain.model.CSVItem;
@@ -26,7 +25,7 @@ public class CSVParserTest {
 		
 		Assert.assertTrue(csvList.get(0).getProductType().equals("COMPUTER"));
 		Assert.assertTrue(csvList.get(0).getAmount() == 2000);
-		Assert.assertTrue(csvList.get(0).getItemProperties().get("series_number").equals("compn002"));
+		Assert.assertTrue(csvList.get(0).getItemProperties().get("SERIES_NUMBER").equals("compn002"));
 		
 		path.toFile().deleteOnExit();
 	}

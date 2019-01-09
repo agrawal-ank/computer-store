@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tcs.salesmgmt.domain.model.CSVItem;
+import com.tcs.salesmgmt.domain.model.CommonProperty;
 import com.tcs.salesmgmt.domain.model.ItemDetails;
 import com.tcs.salesmgmt.domain.model.ManufactureDetails;
+import com.tcs.salesmgmt.domain.model.Product;
 import com.tcs.salesmgmt.domain.model.ProductProperties;
 import com.tcs.salesmgmt.domain.model.ProductType;
 import com.tcs.salesmgmt.domain.repo.ManufacturerRepository;
@@ -32,10 +34,10 @@ public class ProductItemService {
 			final int amount = csvItem.getAmount();
 
 			Map<String, String> itemProperties = csvItem.getItemProperties();
-			final String seriesNumber = itemProperties.get("series_number");
-			final String manufacturer = itemProperties.get("manufacturer");
-			final double price = Double.valueOf(itemProperties.get("price"));
-			final String productPropertyName = getProductProperty(productType);
+			final String seriesNumber = itemProperties.get(CommonProperty.SERIES_NUMBER.name());
+			final String manufacturer = itemProperties.get(CommonProperty.MANUFACTURER.name());
+			final double price = Double.valueOf(itemProperties.get(CommonProperty.PRICE.name()));
+			final String productPropertyName = Product.valueOf(productType.toUpperCase()).getProperty();
 			final String productPropertyValue = itemProperties.get(productPropertyName);
 
 			ProductType productItemDetails = productItemRepository.findByProductType(productType);
@@ -92,15 +94,27 @@ public class ProductItemService {
 
 		StringBuilder treeViewSB = new StringBuilder();
 
+		/*
+		 * Retrieving all available product types (computer, laptop etc)
+		 */
 		for (ProductType item : productItemRepository.findAll()) {
 			treeViewSB.append(item.getProductType() + lineSeperator);
 
+			/*
+			 * Retrieving sub-types(e.g. form-factor of each product type (computer, laptop etc) 
+			 */
 			for (ProductProperties properties : item.getProductProperties()) {
 				treeViewSB.append("\t" + properties.getPropertyValue() + lineSeperator);
 
+				/*
+				 * Retrieving manufacturer details for each product and its sub-type 
+				 */
 				for (ManufactureDetails manufacturer : properties.getManufacturedBy()) {
 					treeViewSB.append("\t\t" + manufacturer.getManufacturerName() + lineSeperator);
 
+					/*
+					 * Retrieving series details (number, price, amount) for each manufacturer as per product type (sub-type)
+					 */
 					for (ItemDetails itemDetails : manufacturer.getItemDetails()) {
 						if (itemDetails.getProductProperties().equals(properties)) {
 							treeViewSB.append("\t\t\t[ " + itemDetails.getSeriesNumber() + " | "
@@ -113,6 +127,10 @@ public class ProductItemService {
 		return treeViewSB.toString();
 	}
 
+	/*
+	 * We can use Tree Data Structure (defined below) to represent all items in tree format.
+	 * But avoiding it as Entity Class Design itself representing a hierarchical design.   
+	 */
 	@Transactional
 	public void getItemsTreeFormat() {
 		TreeNode root = new TreeNode("Computer Store");
@@ -142,14 +160,12 @@ public class ProductItemService {
 
 			}
 		}
-
 		print(root, " ");
 	}
 
 	private void print(TreeNode root, String aling) {
 		System.out.println(aling + root.getData());
 		root.getChildNodes().forEach(each -> print(each, aling + aling));
-
 	}
 
 	class TreeNode {
@@ -186,19 +202,4 @@ public class ProductItemService {
 			return "[data=" + data + "]";
 		}
 	}
-
-	private String getProductProperty(String productType) {
-		String key = null;
-		if (productType.equalsIgnoreCase("Computer")) {
-			key = "form-factor";
-		} else if (productType.equalsIgnoreCase("laptop")) {
-			key = "size";
-		} else if (productType.equalsIgnoreCase("monitor")) {
-			key = "resolution";
-		} else if (productType.equalsIgnoreCase("hdd")) {
-			key = "capacity";
-		}
-		return key;
-	}
-
 }
