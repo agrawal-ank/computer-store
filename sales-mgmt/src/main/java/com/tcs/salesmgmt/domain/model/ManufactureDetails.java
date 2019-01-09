@@ -34,7 +34,7 @@ public class ManufactureDetails implements Serializable {
 	@ManyToMany(mappedBy="manufacturedBy")
 	private List<ProductProperties> productProperties = new ArrayList<>();
 	
-	protected ManufactureDetails() {
+	public ManufactureDetails() {
 	}
 
 	public ManufactureDetails(String manufacturerName, List<ItemDetails> itemDetails) {

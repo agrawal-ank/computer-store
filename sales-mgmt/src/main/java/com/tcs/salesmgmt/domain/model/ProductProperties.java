@@ -34,7 +34,7 @@ public class ProductProperties implements Serializable {
 	@JoinTable(name = "Product_Manufacturer", joinColumns = @JoinColumn(name = "PID"), inverseJoinColumns = @JoinColumn(name = "MID"))
 	List<ManufactureDetails> manufacturedBy = new ArrayList<>();
 
-	protected ProductProperties() {
+	public ProductProperties() {
 	}
 
 	public ProductProperties(String propertyName, String propertyValue, List<ManufactureDetails> manufacturedBy) {

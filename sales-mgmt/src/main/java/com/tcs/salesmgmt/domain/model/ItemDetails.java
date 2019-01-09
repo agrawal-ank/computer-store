@@ -31,7 +31,7 @@ public class ItemDetails implements Serializable {
 	@ManyToOne
 	ProductProperties productProperties;
 	
-	protected ItemDetails() {
+	public ItemDetails() {
 	}
 
 	public ItemDetails(String seriesNumber, double price, long amount) {

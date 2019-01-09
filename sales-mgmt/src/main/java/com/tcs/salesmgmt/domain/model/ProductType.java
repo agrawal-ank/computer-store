@@ -30,7 +30,7 @@ public class ProductType implements Serializable {
 	@JoinColumn(name = "pid")
 	List<ProductProperties> productProperties = new ArrayList<>();
 
-	protected ProductType() {
+	public ProductType() {
 	}
 
 	public ProductType(String productType, List<ProductProperties> productProperties) {
