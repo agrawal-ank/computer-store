@@ -42,14 +42,14 @@ public class CommandLauncher {
 					executeCommand(commandTokens);
 				}
 			} catch (NoSuchFileException e) {
+				console.printf("%s\n", "No Such File: " + e.getMessage());
+				log.error(e.getMessage(), e);
+			} catch (RuntimeException e) {
 				console.printf("%s\n", e.getMessage());
-				//log.error("Error during command parsing", e);
-			} catch (RuntimeException re) {
-				console.printf("%s\n", re.getMessage());
-				//log.error("Error during command parsing", re);
+				log.error(e.getMessage(), e);
 			} catch (Exception e) {
 				console.printf("%s\n", e.getMessage());
-				//log.error("Error during command parsing", e);
+				log.error(e.getMessage(), e);
 			}
 		}
 	}
@@ -99,5 +99,5 @@ public class CommandLauncher {
 	final String helpMsg = "\nValid Commands:\n" + "  import <csv-file>\n" + "  export <file>\n" + "  exit\n";
 	final String invalidCmdMsg = "Invalid Command!";
 	final String cmdPrompt = "Command>";
-	final String welcomeMsg = "Welcome to Computer Store Application";
+	final String welcomeMsg = "\nWelcome to Computer Store Application";
 }

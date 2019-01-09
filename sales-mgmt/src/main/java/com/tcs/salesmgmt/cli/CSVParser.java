@@ -16,6 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 import com.tcs.salesmgmt.domain.model.CSVItem;
+import com.tcs.salesmgmt.domain.model.CommonProperty;
+import com.tcs.salesmgmt.domain.model.FormFactor;
 import com.tcs.salesmgmt.domain.model.Product;
 
 @Component
@@ -24,7 +26,11 @@ public class CSVParser {
 	
 	public List<CSVItem> parseCSV(Path csvFilePath) throws IOException {
 		Function<String, CSVItem> parsingLogic = getLogic();
-		List<CSVItem> itemList = Files.readAllLines(csvFilePath).stream().map(parsingLogic).collect(Collectors.toList());
+		List<String> csvItemLines = Files.readAllLines(csvFilePath);
+		if (csvItemLines.size() == 0) 
+			throw new RuntimeException("Invalid CSV File");
+		
+		List<CSVItem> itemList = csvItemLines.stream().map(parsingLogic).collect(Collectors.toList());
 		log.debug(itemList);
 		return itemList;
 	}
@@ -49,8 +55,6 @@ public class CSVParser {
 			throw new RuntimeException("Invalid CSV File: Total Value Count Should Be 6!");
 		}
 		
-		CSVItem item = new CSVItem();
-		
 		if(!Product.getValidProducts().contains(tokenList.get(0).toUpperCase())) {
 			throw new RuntimeException("Invalid CSV File: Incorrect ProductType: " + tokenList.get(0));
 		}
@@ -63,11 +67,11 @@ public class CSVParser {
 
 		Map<String, String> itemProperties = tokenList.stream().filter(each -> each.contains(":"))
 				.collect(Collectors.toMap(each -> each.split(":")[0], each -> each.split(":")[1]));
-		
 		if(!isKeyValuePropertiesValid(productType, itemProperties)) {
-			throw new RuntimeException("Invalid CSV File: Incorrect Product Properties");
+			throw new RuntimeException("Invalid CSV File: Incorrect Item Property");
 		}
 		
+		CSVItem item = new CSVItem();
 		item.setProductType(productType);
 		item.setAmount(amount);
 		item.setItemProperties(itemProperties);
@@ -76,14 +80,34 @@ public class CSVParser {
 	}
 
 	/**
-	 * Assuming CSV is containing correct properties.
-	 * <<Validation to be implemented>>
+	 * Validate Product Specific and Common Properties
 	 * 
 	 * @param productType
 	 * @param itemProperties
 	 * @return
 	 */
 	private boolean isKeyValuePropertiesValid(String productType, Map<String, String> itemProperties) {
+		List<String> validPropertiesKey = CommonProperty.getValidCommonProperties();
+		String productSpecificPropertyKey = Product.valueOf(productType.toUpperCase()).getProperty();
+		validPropertiesKey.add(productSpecificPropertyKey);
+
+		String productSpecificPropertyValue = null;
+
+		for (String key : itemProperties.keySet()) {
+			if (!validPropertiesKey.contains(key.toUpperCase())) {
+				return false;
+			}
+			if (productSpecificPropertyKey.equalsIgnoreCase(key)) {
+				productSpecificPropertyValue = itemProperties.get(key);
+			}
+			validPropertiesKey.remove(key.toUpperCase());
+		}
+
+		if (validPropertiesKey.size() != 0)
+			return false;
+		if (Product.COMPUTER.name().equalsIgnoreCase(productType)) {
+			return FormFactor.getValidFormFactors().contains(productSpecificPropertyValue.toUpperCase());
+		}
 		return true;
 	}
 
