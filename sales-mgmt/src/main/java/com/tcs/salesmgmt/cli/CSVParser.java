@@ -101,25 +101,27 @@ public class CSVParser {
 	 */
 	private boolean isKeyValuePropertiesValid(String productType, Map<String, String> itemProperties) {
 		List<String> validPropertiesKey = CommonProperty.getValidCommonProperties();
-		String productSpecificPropertyKey = Product.valueOf(productType.toUpperCase()).getProperty();
-		validPropertiesKey.add(productSpecificPropertyKey);
-
-		String productSpecificPropertyValue = null;
+		final String productSpecificProperty = Product.valueOf(productType.toUpperCase()).getProperty();
+		validPropertiesKey.add(productSpecificProperty);
 
 		for (String key : itemProperties.keySet()) {
-			if (!validPropertiesKey.contains(key.toUpperCase())) {
+			if (!validPropertiesKey.contains(key)) {
 				return false;
 			}
-			if (productSpecificPropertyKey.equalsIgnoreCase(key)) {
-				productSpecificPropertyValue = itemProperties.get(key);
-			}
-			validPropertiesKey.remove(key.toUpperCase());
+			validPropertiesKey.remove(key);
 		}
 
 		if (validPropertiesKey.size() != 0)
 			return false;
+		
+		/*
+		 *  Validating form-factor if ProductType is Computer.
+		 *  Return true if valid otherwise false
+		 */
 		if (Product.COMPUTER.name().equalsIgnoreCase(productType)) {
-			return FormFactor.getValidFormFactors().contains(productSpecificPropertyValue.toUpperCase());
+			List<String> validFormFactorList = FormFactor.getValidFormFactors();
+			final String formFactor = itemProperties.get(Product.COMPUTER.getProperty());
+			return validFormFactorList.contains(formFactor.toUpperCase());
 		}
 		return true;
 	}

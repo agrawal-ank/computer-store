@@ -122,8 +122,8 @@ public class ProductItemService {
 					 */
 					for (ItemDetails itemDetails : manufacturer.getItemDetails()) {
 						if (itemDetails.getProductProperties().equals(properties)) {
-							treeViewSB.append("\t\t\t[ " + itemDetails.getSeriesNumber() + " | "
-									+ itemDetails.getPrice() + " | " + itemDetails.getAmount() + " ]" + lineSeperator);
+							treeViewSB.append("\t\t\t[S/N=" + itemDetails.getSeriesNumber() + ", PRICE="
+									+ itemDetails.getPrice() + ", AMOUNT=" + itemDetails.getAmount() + "]" + lineSeperator);
 						}
 					}
 				}
