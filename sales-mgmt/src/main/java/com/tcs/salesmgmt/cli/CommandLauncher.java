@@ -11,6 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Responsible for Launching CommandLine Prompt, Validate Command and Invoke
+ * Command Execution.
+ **/ 
 @Component
 public class CommandLauncher {
 	Log log = LogFactory.getLog(CommandLauncher.class);
@@ -99,5 +103,7 @@ public class CommandLauncher {
 	final String helpMsg = "\nValid Commands:\n" + "  import <csv-file>\n" + "  export <file>\n" + "  exit\n";
 	final String invalidCmdMsg = "Invalid Command!";
 	final String cmdPrompt = "Command>";
-	final String welcomeMsg = "\nWelcome to Computer Store Application";
+	final String welcomeMsg = "\n*************************************" 
+			+ "\nWelcome to Computer Store Application"
+			+ "\n*************************************\n";
 }

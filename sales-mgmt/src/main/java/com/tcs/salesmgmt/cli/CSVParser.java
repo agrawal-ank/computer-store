@@ -1,10 +1,8 @@
 package com.tcs.salesmgmt.cli;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,11 @@ import com.tcs.salesmgmt.domain.model.CommonProperty;
 import com.tcs.salesmgmt.domain.model.FormFactor;
 import com.tcs.salesmgmt.domain.model.Product;
 
+/**
+ * Responsible for parsing csv file, validating and mapping of each item to
+ * object. Expect CSV file item in follwing format: 
+ * <product_type>;<amount>;series_number:<>;manufacturer:<>;price:<>;<product_specific_key>:<product_specific_value>
+ **/ 
 @Component
 public class CSVParser {
 	Log log = LogFactory.getLog(CSVParser.class);

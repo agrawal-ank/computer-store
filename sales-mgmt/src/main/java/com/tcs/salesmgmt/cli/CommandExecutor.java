@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 import com.tcs.salesmgmt.domain.model.CSVItem;
 import com.tcs.salesmgmt.services.ProductItemService;
 
+/**
+ * Responsible for executing the commands by invoking corresponding @Service
+ * component.
+ **/ 
 @Component
 public class CommandExecutor {
 	Log log = LogFactory.getLog(CommandExecutor.class);

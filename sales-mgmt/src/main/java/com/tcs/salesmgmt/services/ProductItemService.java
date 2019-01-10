@@ -19,6 +19,11 @@ import com.tcs.salesmgmt.domain.model.ProductType;
 import com.tcs.salesmgmt.domain.repo.ManufacturerRepository;
 import com.tcs.salesmgmt.domain.repo.ProductItemRepository;
 
+/**
+ * Interacts with persistence layer to manage data and provides interface
+ * consumed by cli layer.
+ * 
+ */
 @Service
 public class ProductItemService {
 	@Autowired
