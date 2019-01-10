@@ -123,7 +123,7 @@ public class ProductItemServiceTest {
 		propertyMap.put("FORM-FACTOR", "desktop");
 		propertyMap.put("SERIES_NUMBER", "C001");
 		propertyMap.put("PRICE", "80000");
-		propertyMap.put("MANUFACTURE", "HP");
+		propertyMap.put("MANUFACTURER", "HP");
 		item1.setItemProperties(propertyMap);
 		
 		CSVItem item2 = new CSVItem();
@@ -133,7 +133,7 @@ public class ProductItemServiceTest {
 		propertyMap1.put("FORM-FACTOR", "desktop");
 		propertyMap1.put("SERIES_NUMBER", "C002");
 		propertyMap1.put("PRICE", "100000");
-		propertyMap1.put("MANUFACTURE", "HP");
+		propertyMap1.put("MANUFACTURER", "HP");
 		item2.setItemProperties(propertyMap1);
 		
 		csvItemList.add(0, item1);
