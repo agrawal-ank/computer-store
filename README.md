@@ -21,7 +21,7 @@ import \<csv-file\>
   - Each line in csv-file represents one product item in following format:
 	- \<ProductType\>;\<Amount\>;series_number:\<\>;manufacturer:\<\>;price:\<\>;\<ProductPropertyKey\>:\<ProductPropertyValue\>
 
-  parameter:
+  parameter:  
   csv-file: csv-file path
 
 
@@ -49,5 +49,5 @@ export \<file\>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[S/N=HL14-100, PRICE=60000, AMOUNT=10]  
 
 
-  parameter:
+  parameter:  
   file: file path
