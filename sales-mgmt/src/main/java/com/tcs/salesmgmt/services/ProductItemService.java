@@ -76,7 +76,7 @@ public class ProductItemService {
 
 			List<ItemDetails> itemDetailsList = manufacturerDetails.getItemDetails();
 			ItemDetails itemDetails = itemDetailsList.stream()
-					.filter(each -> each.getSeriesNumber().equals(seriesNumber)).findFirst().orElse(null);
+					.filter(each -> (each.getSeriesNumber().equals(seriesNumber) && each.getPrice() == price)).findFirst().orElse(null);
 			if (itemDetails == null) {
 				itemDetails = new ItemDetails();
 				itemDetails.setSeriesNumber(seriesNumber);
